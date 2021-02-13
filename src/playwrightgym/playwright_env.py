@@ -61,6 +61,7 @@ class PlaywrightEnv(gym.Env):
         self.browser = self.playwright.chromium.launch(headless=self.headless)
         self.page = self.browser.new_page()
         self.page.set_viewport_size(self.obs_im_shape)
+        self.page.set_default_navigation_timeout(1000)
         self.page.goto(self.base_url)
         self.obs = self._get_screenshot()
         self.step_num = 0
@@ -76,12 +77,12 @@ class PlaywrightEnv(gym.Env):
             if not press_key == "":  # Skip key
                 self.page.keyboard.press(press_key)
             self.obs = self._get_screenshot()
-            self.reward = self.page.get_attribute(
-                f"css=[id={self.reward_elem_name}]", "value"
-            )
             self.step_num += 1
             if self.step_num >= self.max_step_num:
                 self.done = True
+            # Reward is +1 on task completion; -1 otherwise
+            # TODO: Is per-step reward useful or reward at episode end enough?
+            self.reward = self.page.evaluate("get_reward()") if self.done else -1
             self.info = {}
             return self.obs, self.reward, self.done, self.info
         else:
@@ -94,12 +95,13 @@ if __name__ == "__main__":
     env = PlaywrightEnv(playwright, env_config=env_config)
     done = False
     obs = env.reset()
+    step_num = 0
     while not done:
         action = env.action_space.sample()
         next_obs, reward, done, info = env.step(action)
         print(
-            f"obs.shape:{next_obs.shape} \t Reward:{reward} \t Done:{done} \t Info:{info}"
+            f"Step#:{step_num} obs.shape:{next_obs.shape} Action:{action} Reward:{reward} Done:{done} Info:{info}"
         )
-        input()
+        step_num += 1
     env.close()
     playwright.stop()

@@ -5,7 +5,6 @@
   <title>Login User Task</title>
 
   <!-- stylesheets -->
-  <link rel="stylesheet" type="text/css" href="../core/core.css">
   <style>
     .bold {
       font-weight: bold;
@@ -19,23 +18,17 @@
 
   <!-- JS -->
   <script>
-    // Create an element to store reward value
-    reward_display = document.createElement("input");
-    reward_display.setAttribute("type", "hidden");
-    reward_display.setAttribute("name", "reward");
-    reward_display.setAttribute("value", 0);  // Zero by default
-
     function get_reward() {
       username = document.getElementById("username");
       password = document.getElementById("password");
       reward = (username == "hello" && password == "world") ? 1.0 : -1.0;
-      reward_display.setAttribute("value", reward);
       return reward
     }
 
     submitbtn = document.getElementById("subbtn")
     submitbtn.addEventListener("click", function () {
-      console.log(get_reward())
+      //TODO(praveenp): Add to info dict
+      console.log("Submitbtn clicked; Reward:".get_reward())
     })
   </script>
 </head>
