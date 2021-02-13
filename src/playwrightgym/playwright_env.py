@@ -16,17 +16,40 @@ KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase 
 class PlaywrightEnv(gym.Env):
     def __init__(self, env_config: typing.Dict):
         self.env_config = env_config
-        self.base_url = env_config.get("url", "file://login-user.html")
+        self.base_url = env_config.get("url", "http://localhost:8000/login-user.html")
         self.obs_im_shape = env_config.get(
             "obs_im_shape", {"width": 160, "height": 210}
         )
+        self.obs_im_channels = 3
         self.reward_elem_name = self.env_config.get("reward_elem_name", "reward")
         self.step_num = 0
         self.max_step_num = self.env_config.get("max_step_num", 100)
-        self.headless = self.env_config.get("headless", False)
+        self.num_allowed_chars = len(KEY_ACTION_MAP) - 1
+        self.observation_space = gym.spaces.Box(
+            0,
+            255,
+            (
+                self.obs_im_shape["width"],
+                self.obs_im_shape["height"],
+                self.obs_im_channels,
+            ),
+            dtype=int,
+        )
+        # Action: [x, y, character]
+        self.action_space = gym.spaces.Box(
+            low=np.array([0, 0, 0]),
+            high=np.array(
+                [
+                    self.obs_im_shape["width"],
+                    self.obs_im_shape["height"],
+                    self.num_allowed_chars,
+                ]
+            ),
+            shape=(3,),
+            dtype=np.float32,  # minval for tf.random.uniform for int is expected to be scalar :?;https://github.com/tensorflow/tensorflow/issues/39814
+        )
+        self.headless = self.env_config.get("headless", True)
         self.playwright = sync_playwright()
-        with self.playwright as p:
-            self.browser = p.chromium.launch(headless=self.headless)
 
     def _get_screenshot(self) -> np.ndarray:
         screenshot_bytes = self.page.screenshot()
@@ -34,12 +57,15 @@ class PlaywrightEnv(gym.Env):
         return screenshot
 
     def reset(self) -> np.ndarray:
-        with self.playwright:
+        with self.playwright as p:
+            self.browser = p.chromium.launch(headless=self.headless)
+
             self.page = self.browser.new_page()
             self.page.set_viewport_size(self.obs_im_shape)
             self.page.goto(self.base_url)
             self.obs = self._get_screenshot()
             self.step_num = 0
+            self.done = False
             return self.obs
 
     def step(self, action):
