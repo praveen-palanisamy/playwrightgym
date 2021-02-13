@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Login User Task</title>
+
+  <!-- stylesheets -->
+  <link rel="stylesheet" type="text/css" href="../core/core.css">
+  <style>
+    .bold {
+      font-weight: bold;
+    }
+
+    input {
+      margin: 5px;
+      width: 100px;
+    }
+  </style>
+
+  <!-- JS -->
+  <script>
+    // Create an element to store reward value
+    reward_display = document.createElement("input");
+    reward_display.setAttribute("type", "hidden");
+    reward_display.setAttribute("name", "reward");
+    reward_display.setAttribute("value", 0);  // Zero by default
+
+    function get_reward() {
+      username = document.getElementById("username");
+      password = document.getElementById("password");
+      reward = (username == "hello" && password == "world") ? 1.0 : -1.0;
+      reward_display.setAttribute("value", reward);
+      return reward
+    }
+
+    submitbtn = document.getElementById("subbtn")
+    submitbtn.addEventListener("click", function () {
+      console.log(get_reward())
+    })
+  </script>
+</head>
+
+<body>
+  <div id="wrap">
+    <div id="query"></div>
+    <div id="area">
+      <div id="form">
+        <p>
+        <div id="task"><b> Task: </b>Login with username hello and password world.</div>
+        </p>
+        <p><label class="bold">Username</label><input type="text" id="username"></p>
+        <p><label class="bold">Password</label><input type="password" id="password"></p>
+        <button id="subbtn" class="secondary-action">Login</button>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>
