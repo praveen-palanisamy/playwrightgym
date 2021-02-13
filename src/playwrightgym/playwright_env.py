@@ -19,7 +19,7 @@ class PlaywrightEnv(gym.Env):
         self.base_url = env_config.get("url", "http://localhost:8000/login-user.html")
         self.playwright = playwright
         self.obs_im_shape = env_config.get(
-            "obs_im_shape", {"width": 160, "height": 210}
+            "obs_im_shape", {"width": 160, "height": 260}
         )
         self.obs_im_channels = 3
         self.reward_elem_name = self.env_config.get("reward_elem_name", "reward")
@@ -54,7 +54,7 @@ class PlaywrightEnv(gym.Env):
 
     def _get_screenshot(self) -> np.ndarray:
         screenshot_bytes = self.page.screenshot()
-        screenshot = np.array(Image.open(io.BytesIO(screenshot_bytes)))
+        screenshot = np.array(Image.open(io.BytesIO(screenshot_bytes)).convert("RGB"))
         return screenshot
 
     def reset(self) -> np.ndarray:
@@ -103,5 +103,8 @@ if __name__ == "__main__":
             f"Step#:{step_num} obs.shape:{next_obs.shape} Action:{action} Reward:{reward} Done:{done} Info:{info}"
         )
         step_num += 1
+        # Debug:
+        # Image.fromarray(next_obs).show()
+        # input()
     env.close()
     playwright.stop()
