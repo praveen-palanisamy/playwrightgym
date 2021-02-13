@@ -14,10 +14,10 @@ KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase 
 
 
 class PlaywrightEnv(gym.Env):
-    def __init__(self, playwright, env_config: typing.Dict):
+    def __init__(self, env_config: typing.Dict = {}):
         self.env_config = env_config
         self.base_url = env_config.get("url", "http://localhost:8000/login-user.html")
-        self.playwright = playwright
+        self.playwright = sync_playwright().start()
         self.obs_im_shape = env_config.get(
             "obs_im_shape", {"width": 160, "height": 260}
         )
@@ -88,11 +88,15 @@ class PlaywrightEnv(gym.Env):
         else:
             raise (ValueError("Episode done. Call reset()"))
 
+    def close(self):
+        self.browser.close()
+        self.playwright.stop()
+        super().close()
+
 
 if __name__ == "__main__":
     env_config = {}
-    playwright = sync_playwright().start()
-    env = PlaywrightEnv(playwright, env_config=env_config)
+    env = PlaywrightEnv(env_config=env_config)
     done = False
     obs = env.reset()
     step_num = 0
@@ -107,4 +111,3 @@ if __name__ == "__main__":
         # Image.fromarray(next_obs).show()
         # input()
     env.close()
-    playwright.stop()
