@@ -17,7 +17,6 @@ class PlaywrightEnv(gym.Env):
     def __init__(self, env_config: typing.Dict = {}):
         self.env_config = env_config
         self.base_url = env_config.get("url", "http://localhost:8000/login-user.html")
-        self.playwright = sync_playwright().start()
         self.obs_im_shape = env_config.get(
             "obs_im_shape", {"width": 160, "height": 260}
         )
@@ -50,7 +49,11 @@ class PlaywrightEnv(gym.Env):
             dtype=np.float32,  # minval for tf.random.uniform for int is expected to be scalar :?;https://github.com/tensorflow/tensorflow/issues/39814
         )
         self.headless = self.env_config.get("headless", True)
-        # self.playwright = sync_playwright()
+        self.playwright = sync_playwright().start()
+        self.browser = self.playwright.chromium.launch(headless=self.headless)
+        self.page = self.browser.new_page()
+        self.page.set_viewport_size(self.obs_im_shape)
+        self.page.set_default_navigation_timeout(1000)
 
     def _get_screenshot(self) -> np.ndarray:
         screenshot_bytes = self.page.screenshot()
@@ -58,10 +61,6 @@ class PlaywrightEnv(gym.Env):
         return screenshot
 
     def reset(self) -> np.ndarray:
-        self.browser = self.playwright.chromium.launch(headless=self.headless)
-        self.page = self.browser.new_page()
-        self.page.set_viewport_size(self.obs_im_shape)
-        self.page.set_default_navigation_timeout(1000)
         self.page.goto(self.base_url)
         self.obs = self._get_screenshot()
         self.step_num = 0
