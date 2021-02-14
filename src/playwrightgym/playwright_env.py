@@ -68,13 +68,25 @@ class PlaywrightEnv(gym.Env):
         self.done = False
         return self.obs
 
+    def _clamp(self, action, low, high):
+        low_x, low_y, low_char_idx = low
+        high_x, high_y, high_char_idx = high
+        return (
+            max(low_x, min(action[0], high_x)),
+            max(low_y, min(action[1], high_y)),
+            max(low_char_idx, min(action[2], high_char_idx)),
+        )
+
     def step(self, action):
         # action: [click_x, click_y, press_key]
-        click_x, click_y, press_key_id = action
-        press_key = KEY_ACTION_MAP.get(press_key_id, "")
         if not self.done:
+            clamped_action = self._clamp(
+                action, self.action_space.low, self.action_space.high
+            )
+            click_x, click_y, press_key_id = clamped_action
+            press_key = KEY_ACTION_MAP.get(press_key_id, "")
             self.page.mouse.click(float(click_x), float(click_y))
-            if not press_key == "":  # Skip key
+            if not press_key == "":  # Skip ""
                 self.page.keyboard.press(press_key)
             self.obs = self._get_screenshot()
             self.step_num += 1
