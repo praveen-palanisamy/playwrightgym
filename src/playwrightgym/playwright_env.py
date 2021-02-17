@@ -1,13 +1,17 @@
 #!/usr/bin/env python
 
-import gym
-import typing
-from playwright.sync_api import sync_playwright
-from PIL import Image
 import io
-import numpy as np
+import os
 import string
+import typing
 
+import gym
+import numpy as np
+from PIL import Image
+from playwright.sync_api import sync_playwright
+
+cur_path_dir = os.path.dirname(os.path.realpath(__file__))
+webtasks_dir = os.path.join(cur_path_dir, "webtasks")
 
 # Generate an index mapped character list: ["", a, b, c, ... x, y, z, " "]
 KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase + " "))}
@@ -16,7 +20,7 @@ KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase 
 class PlaywrightEnv(gym.Env):
     def __init__(self, env_config: typing.Dict = {}):
         self.env_config = env_config
-        self.base_url = env_config.get("url", "http://localhost:8000/login-user.html")
+        self.base_url = env_config.get("url", "file://{webtasks_dir}/login-user.html")
         self.obs_im_shape = env_config.get(
             "obs_im_shape", {"width": 160, "height": 260}
         )
