@@ -20,7 +20,7 @@ KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase 
 class PlaywrightEnv(gym.Env):
     def __init__(self, env_config: typing.Dict = {}):
         self.env_config = env_config
-        self.base_url = env_config.get("url", "file://{webtasks_dir}/login-user.html")
+        self.base_url = env_config.get("url", f"file://{webtasks_dir}/login-user.html")
         self.obs_im_shape = env_config.get(
             "obs_im_shape", {"width": 160, "height": 260}
         )
