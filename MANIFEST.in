@@ -1,1 +1,1 @@
-recursive-include src/playwrightgym/ *
+recursive-include src/playwright_gym/ *

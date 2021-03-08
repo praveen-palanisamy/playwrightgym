@@ -12,7 +12,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 _AVAILABLE_ENVS = {
     "PlaywrightLoginUserVisualEnv-v0": {
-        "entry_point": "playwrightgym.playwright_env:PlaywrightEnv",
+        "entry_point": "playwright_gym.playwright_env:PlaywrightEnv",
         "discription": "Login form with username, password",
     },
 }

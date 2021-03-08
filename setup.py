@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# PlaywrightGym Visual Web envs for RL Agent training
+# Playwright Gym Visual Web envs for RL Agent training
 
 from setuptools import setup, find_packages
 import pathlib
@@ -10,12 +10,12 @@ parent_dir = pathlib.Path(__file__).parent.resolve()
 long_description = (parent_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
-    name="playwrightgym",  # Required
+    name="playwright_gym",  # Required
     version="0.0.1",  # Required
     description="Reinforcement Learning Environments for web-based tasks using Playwright",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional (see note above)
-    url="https://github.com/praveen-palanisamy/playwrightgym",  # Optional
+    url="https://github.com/praveen-palanisamy/playwright-gym",  # Optional
     author="Praveen Palanisamy",  # Optional
     author_email="praveen.palanisamy@outlook.com",
     classifiers=[  # Optional
@@ -33,14 +33,14 @@ setup(
         "Programming Language :: Python :: 3.9",
         "Programming Language :: Python :: 3 :: Only",
     ],
-    keywords="playwrightgym, rl web tasks, rl in browser, Gym environments",  # Optional
+    keywords="playwright-gym, rl web tasks, rl web navigation, rl in browser, Gym environments",  # Optional
     package_dir={"": "src"},  # Optional
     packages=find_packages(where="src"),  # Required
     include_package_data=True,
     python_requires=">=3.6, <4",
     install_requires=["gym"],
     project_urls={  # Optional
-        "Source": "https://github.com/praveen-palanisamy/Tensorflow-2-Reinforcement-Learning-Cookbook",
+        "Source": "https://github.com/praveen-palanisamy/playwright-gym",
         "Author website": "https://praveenp.com",
     },
 )
