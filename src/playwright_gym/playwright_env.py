@@ -14,7 +14,7 @@ cur_path_dir = os.path.dirname(os.path.realpath(__file__))
 webtasks_dir = os.path.join(cur_path_dir, "webtasks")
 
 # Generate an index mapped character list: [A, B, C, ... X, Y, Z, " "]
-KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list(string.ascii_uppercase + " "))}
+ACTION_KEY_MAP = {i: x for (i, x) in enumerate(list(string.ascii_uppercase + " "))}
 
 
 class PlaywrightEnv(gym.Env):
@@ -28,7 +28,7 @@ class PlaywrightEnv(gym.Env):
         self.reward_elem_name = self.env_config.get("reward_elem_name", "reward")
         self.step_num = 0
         self.max_step_num = self.env_config.get("max_step_num", 100)
-        self.num_allowed_chars = len(KEY_ACTION_MAP) - 1
+        self.num_allowed_chars = len(ACTION_KEY_MAP) - 1
         self.observation_space = gym.spaces.Box(
             0,
             255,
@@ -87,7 +87,7 @@ class PlaywrightEnv(gym.Env):
                 action, self.action_space.low, self.action_space.high
             )
             click_x, click_y, press_key_id = clamped_action
-            press_key = KEY_ACTION_MAP.get(press_key_id, "")
+            press_key = ACTION_KEY_MAP.get(press_key_id, "")
             self.page.mouse.click(float(click_x), float(click_y))
             if not press_key == "":  # Skip ""
                 self.page.keyboard.press(press_key)
