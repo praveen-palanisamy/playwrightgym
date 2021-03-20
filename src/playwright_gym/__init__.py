@@ -8,6 +8,7 @@ import os
 from gym.envs.registration import register
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from playwright_gym.playwright_env import KEY_ACTION_MAP
 
 
 _AVAILABLE_ENVS = {

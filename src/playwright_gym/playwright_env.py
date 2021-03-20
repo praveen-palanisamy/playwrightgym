@@ -13,8 +13,8 @@ from playwright.sync_api import sync_playwright
 cur_path_dir = os.path.dirname(os.path.realpath(__file__))
 webtasks_dir = os.path.join(cur_path_dir, "webtasks")
 
-# Generate an index mapped character list: ["", a, b, c, ... x, y, z, " "]
-KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list("" + string.ascii_uppercase + " "))}
+# Generate an index mapped character list: [A, B, C, ... X, Y, Z, " "]
+KEY_ACTION_MAP = {i: x for (i, x) in enumerate(list(string.ascii_uppercase + " "))}
 
 
 class PlaywrightEnv(gym.Env):
