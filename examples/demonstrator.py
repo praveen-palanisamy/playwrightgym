@@ -6,7 +6,7 @@ from argparse import ArgumentParser
 import cv2
 import gym
 import numpy as np
-import playwright_gym
+import playwrightgym
 
 parser = ArgumentParser("playwright-gym_human_player")
 parser.add_argument(

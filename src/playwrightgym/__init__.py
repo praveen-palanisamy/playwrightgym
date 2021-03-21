@@ -1,6 +1,6 @@
 #!/usr/bin/env python
-# PlaywrightGym Visual Web envs for RL Agent training
-__version__ = "0.0.1"
+# PlaywrightGym: Visual Web envs for RL Agent training
+__version__ = "0.0.2"
 
 import sys
 import os
@@ -8,7 +8,7 @@ import os
 from gym.envs.registration import register
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-from playwright_gym.playwright_env import ACTION_KEY_MAP
+from playwrightgym.playwright_env import ACTION_KEY_MAP
 
 
 _AVAILABLE_ENVS = {
