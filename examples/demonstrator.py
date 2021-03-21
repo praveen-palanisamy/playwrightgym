@@ -20,8 +20,8 @@ parser.add_argument(
 
 
 class Demonstrator(object):
-    def __init__(self, args):
-        self.env_name = args.env_name
+    def __init__(self, env_name: str):
+        self.env_name = env_name
         self.env = gym.make(self.env_name)
         self.window_name = "Playwright-Gym-demo-collector"
         cv2.namedWindow(self.window_name)
@@ -59,19 +59,18 @@ class Demonstrator(object):
         # else: TODO(praveenp) Handle invalid actions & reset prev action or include NOOP action in env
         return np.array([self.action["x"], self.action["y"], self.action["key_idx"]])
 
-    def run(self):
-        for ep in range(args.num_episodes):
-            done = False
-            obs = self.env.reset()
-            step = 0
-            while not done:
-                action = self.get_action(obs)
-                obs, reward, done, info = self.env.step(action)
-                # print(f"obs.shape:{obs.shape} rew:{reward} done:{done}")
-                step += 1
-
 
 if __name__ == "__main__":
     args = parser.parse_args()
-    demonstrator = Demonstrator(args)
-    demonstrator.run()
+    demonstrator = Demonstrator(args.env_name)
+    for ep in range(args.num_episodes):
+        done = False
+        obs = demonstrator.env.reset()
+        step = 0
+        while not done:
+            action = demonstrator.get_action(obs)
+            obs, reward, done, info = demonstrator.env.step(action)
+            print(
+                f"Ep#:{ep} step#:{step} obs.shape:{obs.shape} rew:{reward} done:{done}"
+            )
+            step += 1
