@@ -30,7 +30,7 @@ class Demonstrator(object):
         self.action = {"x": 0, "y": 0, "key_idx": 0}
         # Create a key_action_map: {keyboard_char: key_idx}
         self.ord_key_action_map = {
-            v: k for k, v in playwright_gym.ACTION_KEY_MAP.items()
+            v: k for k, v in playwrightgym.ACTION_KEY_MAP.items()
         }
 
     def mouse_handler(self, event, x, y, flags, params):
