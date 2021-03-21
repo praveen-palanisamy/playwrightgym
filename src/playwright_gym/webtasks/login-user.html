@@ -18,18 +18,24 @@
 
   <!-- JS -->
   <script>
+    var taskComplete = false;
     function get_reward() {
-      username = document.getElementById("username");
-      password = document.getElementById("password");
-      reward = (username == "hello" && password == "world") ? 1.0 : -1.0;
-      return reward
+            reward = taskComplete ? 1.0 : -1.0;
+      return reward;
     }
 
-    submitbtn = document.getElementById("subbtn")
-    submitbtn.addEventListener("click", function () {
+    function initGym() {
+      submitbtn = document.getElementById("subbtn")
+      submitbtn.addEventListener("click", function () {
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      taskComplete = (username == "HELLO" && password == "WORLD") ? true : false;
       //TODO(praveenp): Add to info dict
-      console.log("Submitbtn clicked; Reward:".get_reward())
+      console.log("Submitbtn clicked; taskComplete:", taskComplete);
     })
+    }
+
+    window.onload = initGym;
   </script>
 </head>
 
@@ -39,11 +45,11 @@
     <div id="area">
       <div id="form">
         <p>
-        <div id="task"><b> Task: </b>Login with username hello and password world.</div>
+        <div id="task"><b> Task: </b>Login with username <b>HELLO</b> and password <b>WORLD</b>.</div>
         </p>
         <p><label class="bold">Username</label><input type="text" id="username"></p>
         <p><label class="bold">Password</label><input type="password" id="password"></p>
-        <button id="subbtn" class="secondary-action">Login</button>
+        <button id="subbtn">Login</button>
       </div>
     </div>
   </div>

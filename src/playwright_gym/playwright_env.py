@@ -93,11 +93,11 @@ class PlaywrightEnv(gym.Env):
                 self.page.keyboard.press(press_key)
             self.obs = self._get_screenshot()
             self.step_num += 1
+            # Reward is +1 on task completion; -1 otherwise
+            self.reward = self.page.evaluate("get_reward()")
+            self.done = self.page.evaluate("taskComplete")
             if self.step_num >= self.max_step_num:
                 self.done = True
-            # Reward is +1 on task completion; -1 otherwise
-            # TODO: Is per-step reward useful or reward at episode end enough?
-            self.reward = self.page.evaluate("get_reward()") if self.done else -1
             self.info = {}
             return self.obs, self.reward, self.done, self.info
         else:
