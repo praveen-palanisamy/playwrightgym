@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # PlaywrightGym: Visual Web envs for RL Agent training
-__version__ = "0.0.2"
+__version__ = "0.0.3"
 
 import sys
 import os

@@ -11,7 +11,7 @@ long_description = (parent_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="playwrightgym",  # Required
-    version="0.0.2",  # Required
+    version="0.0.3",  # Required
     description="Reinforcement Learning Environments for web-based tasks using Playwright",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional (see note above)

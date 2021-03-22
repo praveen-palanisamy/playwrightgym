@@ -13,8 +13,10 @@ from playwright.sync_api import sync_playwright
 cur_path_dir = os.path.dirname(os.path.realpath(__file__))
 webtasks_dir = os.path.join(cur_path_dir, "webtasks")
 
-# Generate an index mapped character list: [A, B, C, ... X, Y, Z, " "]
-ACTION_KEY_MAP = {i: x for (i, x) in enumerate(list(string.ascii_uppercase + " "))}
+# Generate an index mapped character list: ["NOKEY", A, B, C, ... X, Y, Z, " "]
+ACTION_KEY_MAP = {
+    i: x for (i, x) in enumerate(list("NOKEY" + string.ascii_uppercase + " "))
+}
 
 
 class PlaywrightEnv(gym.Env):
@@ -86,10 +88,11 @@ class PlaywrightEnv(gym.Env):
             clamped_action = self._clamp(
                 action, self.action_space.low, self.action_space.high
             )
-            click_x, click_y, press_key_id = clamped_action
+            click_x, click_y, press_key_id_float = clamped_action
+            press_key_id = int(press_key_id_float)  # Using integer part; No ceil/floor
             press_key = ACTION_KEY_MAP.get(press_key_id, "")
             self.page.mouse.click(float(click_x), float(click_y))
-            if not press_key == "":  # Skip ""
+            if not (press_key in ["NOKEY", ""]):  # Skip NOKEY, ""
                 self.page.keyboard.press(press_key)
             self.obs = self._get_screenshot()
             self.step_num += 1
