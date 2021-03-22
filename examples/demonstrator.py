@@ -56,7 +56,8 @@ class Demonstrator(object):
 
         if key_char in self.ord_key_action_map:
             self.action["key_idx"] = self.ord_key_action_map[key_char]
-        # else: TODO(praveenp) Handle invalid actions & reset prev action or include NOOP action in env
+        else:
+            self.action["key_idx"] = 0  # NOKEY
         return np.array([self.action["x"], self.action["y"], self.action["key_idx"]])
 
 

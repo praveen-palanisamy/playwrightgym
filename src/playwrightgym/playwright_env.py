@@ -15,7 +15,7 @@ webtasks_dir = os.path.join(cur_path_dir, "webtasks")
 
 # Generate an index mapped character list: ["NOKEY", A, B, C, ... X, Y, Z, " "]
 ACTION_KEY_MAP = {
-    i: x for (i, x) in enumerate(list("NOKEY" + string.ascii_uppercase + " "))
+    i: x for (i, x) in enumerate(["NOKEY"] + list(string.ascii_uppercase + " "))
 }
 
 
