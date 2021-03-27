@@ -11,8 +11,8 @@ import playwrightgym
 parser = ArgumentParser("playwright-gym_human_player")
 parser.add_argument(
     "--env-name",
-    default="PlaywrightLoginUserVisualEnv-v0",
-    help="playwright-gym Env name. Default=PlaywrightLoginUserVisualEnv-v0",
+    default="LoginFormVisual-v0",
+    help="playwright-gym Env name. Default=LoginFormVisual-v0",
 )
 parser.add_argument(
     "--num-episodes", default=2, help="Number of episodes to play. Default=2"

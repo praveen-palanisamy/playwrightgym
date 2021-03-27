@@ -26,7 +26,7 @@ def preprocess_obs(obs):
 if __name__ == "__main__":
     batch_builder = SampleBatchBuilder()
     writer = JsonWriter(SAVE_DIR)
-    env_name = "PlaywrightLoginUserVisualEnv-v0"
+    env_name = "LoginFormVisual-v0"
     demonstrator = Demonstrator(env_name)
 
     for episode in range(2):
