@@ -11,8 +11,8 @@ long_description = (parent_dir / "README.md").read_text(encoding="utf-8")
 
 setup(
     name="playwrightgym",  # Required
-    version="0.0.3",  # Required
-    description="Reinforcement Learning Environments for web-based tasks using Playwright",  # Optional
+    version="0.1.0",  # Required
+    description="Deep Reinforcement Learning Environments for web-based tasks using Playwright",  # Optional
     long_description=long_description,  # Optional
     long_description_content_type="text/markdown",  # Optional (see note above)
     url="https://github.com/praveen-palanisamy/playwrightgym",  # Optional
@@ -27,7 +27,6 @@ setup(
         "Topic :: Scientific/Engineering :: Artificial Intelligence",
         "License :: OSI Approved :: MIT License",
         "Programming Language :: Python :: 3",
-        "Programming Language :: Python :: 3.6",
         "Programming Language :: Python :: 3.7",
         "Programming Language :: Python :: 3.8",
         "Programming Language :: Python :: 3.9",
@@ -37,7 +36,7 @@ setup(
     package_dir={"": "src"},  # Optional
     packages=find_packages(where="src"),  # Required
     include_package_data=True,
-    python_requires=">=3.6, <4",
+    python_requires=">=3.7, <4",
     install_requires=["gym"],
     project_urls={  # Optional
         "Source": "https://github.com/praveen-palanisamy/playwrightgym",
