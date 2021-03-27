@@ -1,0 +1,45 @@
+[tool.poetry]
+authors = ["Praveen Palanisamy <praveen.palanisamy@outlook.com>"]
+
+description = "Deep Reinforcement Learning Environments for web-based tasks using Playwright"
+homepage = "https://github.com/praveen-palanisamy/playwrightgym"
+keywords = ["playwright gym", "rl web tasks", "rl web navigation", "browser rl", "Gym environments"]
+license = "MIT"
+name = "playwrightgym"
+readme = "README.md"
+repository = "https://github.com/praveen-palanisamy/playwrightgym"
+version = "0.1.0"
+
+include = ["src/playwrightgym/*"]
+packages = [
+  {include = "playwrightgym", from = "src"},
+]
+
+classifiers = [
+  # Optional
+  "Development Status :: 2 - Pre-Alpha",
+  "Intended Audience :: Science/Research",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Education",
+  "Topic :: Scientific/Engineering",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.7",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+]
+[tool.poetry.dependencies]
+gym = "^0.18.0"
+numpy = "^1.20.1"
+playwright = "^1.10.0"
+python = "^3.7"
+opencv-contrib-python = "^4.5.1"
+
+[tool.poetry.dev-dependencies]
+black = "^20.8b1"
+ray = {version = "^1.2.0", extras = ["rllib"]}
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0", "setuptools"]
