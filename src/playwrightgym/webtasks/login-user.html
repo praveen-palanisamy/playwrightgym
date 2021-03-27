@@ -18,21 +18,36 @@
 
   <!-- JS -->
   <script>
-    var taskComplete = false;
-    function get_reward() {
-            reward = taskComplete ? 1.0 : -1.0;
+    /** Done is true when submit button is clicked */
+    var done = false;
+    /**
+     * Reward is:
+     *      -1 per step by default.
+     *      +1 if submit button is clicked and the task is complete
+     *      -2 if submit button is clicked and the task is incomplete
+     */
+    var reward = -1;
+
+    var taskComplete_ = false;  // true when username & password match the target
+    function getReward() {
+            reward = taskComplete_ ? 1.0 : -1.0;
       return reward;
+    }
+
+    function submitTask() {
+      done = true;
+
+      /** Check for task completion by comparing current state with goal state */
+      username = document.getElementById("username").value;
+      password = document.getElementById("password").value;
+      taskComplete_ = (username == "HELLO" && password == "WORLD") ? true : false;
+
+      reward = taskComplete_ ? 1.0: -2;
     }
 
     function initGym() {
       submitbtn = document.getElementById("subbtn")
-      submitbtn.addEventListener("click", function () {
-      username = document.getElementById("username").value;
-      password = document.getElementById("password").value;
-      taskComplete = (username == "HELLO" && password == "WORLD") ? true : false;
-      //TODO(praveenp): Add to info dict
-      console.log("Submitbtn clicked; taskComplete:", taskComplete);
-    })
+      submitbtn.addEventListener("click", submitTask)
     }
 
     window.onload = initGym;

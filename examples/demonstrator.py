@@ -71,7 +71,5 @@ if __name__ == "__main__":
         while not done:
             action = demonstrator.get_action(obs)
             obs, reward, done, info = demonstrator.env.step(action)
-            print(
-                f"Ep#:{ep} step#:{step} obs.shape:{obs.shape} rew:{reward} done:{done}"
-            )
+            print(f"Ep#:{ep} step#:{step} action:{action} rew:{reward} done:{done}")
             step += 1
